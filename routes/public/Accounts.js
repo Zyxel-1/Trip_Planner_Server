@@ -3,7 +3,6 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const { User } = require('../../models/user');
-const users = require('../../data');
 
 router.post('/', async (req, res) => {
   try {
@@ -20,6 +19,9 @@ router.put('/login', function(req, res) {
   const { body } = req;
 
   User.findOne({ email: body.email }, (err, user) => {
+    if (!user) {
+      res.status(400).send('Could not find user');
+    }
     if (user.verifyPassword(body.password)) {
       const token = user.generateJWT();
       res.status(200).send({ 'app-token': token });

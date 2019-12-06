@@ -28,21 +28,6 @@ const UserSchema = new Schema({
   }
 });
 
-UserSchema.pre('validate', function(next) {
-  const user = this;
-  if (user.isModified('password')) {
-    bcrypt.genSalt(SALT_ROUNDS, (err, salt) => {
-      bcrypt.hash(this.password, salt, (err, hash) => {
-        user.password = hash;
-        user.salt = salt;
-        next();
-      });
-    });
-  } else {
-    next();
-  }
-});
-
 // Validate incoming password
 UserSchema.methods.verifyPassword = async function(password) {
   const result = await bcrypt.compare(password, this.password);
@@ -65,8 +50,6 @@ UserSchema.methods.generateJWT = function() {
     .toString();
   return token;
 };
-
-const { ObjectId } = require('mongodb');
 
 const User = mongoose.model('User', UserSchema);
 

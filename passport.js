@@ -1,6 +1,6 @@
 const passportJWT = require('passport-jwt');
 const _ = require('lodash');
-const users = require('./data');
+const { User } = require('./models/user');
 
 const { ExtractJwt } = passportJWT;
 const JwtStrategy = passportJWT.Strategy;
@@ -9,14 +9,14 @@ const jwtOptions = {};
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 jwtOptions.secretOrKey = process.env.PRIVATE_KEY;
 
-const strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
+const strategy = new JwtStrategy(jwtOptions, (jwt_payload, next) => {
   console.log('payload received', jwt_payload);
-  // usually this would be a database call:
-  const user = users[_.findIndex(users, { id: jwt_payload.id })];
-  if (user) {
-    next(null, user);
-  } else {
-    next(null, false);
-  }
+  User.findOne({ id: jwt_payload.id }, (err, user) => {
+    if (user) {
+      next(null, user);
+    } else {
+      next(null, false);
+    }
+  });
 });
 module.exports = strategy;
