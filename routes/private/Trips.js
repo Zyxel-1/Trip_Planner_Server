@@ -21,16 +21,24 @@ router.post('/', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-  const trip = req.body;
+  const {
+    params: { id }
+  } = req;
 
-  res.json({ message: 'you deleted a trip' });
+  console.log(id);
+  Trip.deleteOne({ _id: id }, err => {
+    if (err) {
+      res.status(400).send(`An error has occurred`);
+    }
+    res.json({ message: 'you deleted a trip' });
+  });
 });
 
 router.get('/', (req, res) => {
   res.json({ message: 'you got  all trips' });
 });
 
-router.put('/:id', () => {
-  res.json({ message: 'you edited a trip' });
+router.put('/', () => {
+  res.json({ message: 'you updated a trip' });
 });
 module.exports = router;
