@@ -6,7 +6,9 @@ router.get('/:id', (req, res) => {
     params: { id }
   } = req;
   Trip.findById({ id }, (err, trip) => {
-    console.log('found one');
+    if (err) {
+      console.log(err);
+    }
     res.json({ message: 'You got an id from a trip', trip });
   });
 });
@@ -24,8 +26,6 @@ router.delete('/:id', (req, res) => {
   const {
     params: { id }
   } = req;
-
-  console.log(id);
   Trip.deleteOne({ _id: id }, err => {
     if (err) {
       res.status(400).send(`An error has occurred`);
@@ -35,7 +35,11 @@ router.delete('/:id', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  res.json({ message: 'you got  all trips' });
+  const UserID = req.user.id;
+  Trip.find({ UserID }, (err, trips) => {
+    const list = trips.map(trip => ({ id: trip._id, title: trip.title }));
+    res.json(list);
+  });
 });
 
 router.put('/', () => {

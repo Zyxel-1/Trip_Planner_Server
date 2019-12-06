@@ -8,6 +8,7 @@ const TripSchema = new Schema({
   Description: String,
   StartDate: Date,
   EndDate: Date,
+  UserID: String,
   TodoItem: [
     {
       Title: String,
