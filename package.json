@@ -1,0 +1,31 @@
+{
+  "name": "trip_planner_server",
+  "version": "1.0.0",
+  "description": "A simple backend server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zyxel-1/Trip_Planner_Server.git"
+  },
+  "author": "Roberto Sanchez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zyxel-1/Trip_Planner_Server/issues"
+  },
+  "homepage": "https://github.com/Zyxel-1/Trip_Planner_Server#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "mongodb": "^3.3.5",
+    "mongoose": "^5.7.13",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0"
+  }
+}
