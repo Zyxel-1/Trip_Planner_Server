@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const SALT_ROUNDS = 10;
 // JWT expiration is in minutes
-const JWT_EXPIRATION_TIME = '1hr';
+const JWT_EXPIRATION_TIME = '12hr';
 
 // Define schema
 const { Schema } = mongoose;

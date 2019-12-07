@@ -9,13 +9,16 @@ router.post('/', async (req, res) => {
     const { body } = req;
     const user = new User(body);
     await user.save();
-    res.status(201).json({ message: 'Registration Complete' });
+    const token = user.generateJWT();
+    res
+      .set('token', `Bearer ${token}`)
+      .send({ message: 'Registration  & Login Successful.', token });
   } catch (e) {
     res.status(400).send(`An error has occured: ${e}`);
   }
 });
 
-router.put('/login', function(req, res) {
+router.put('/', function(req, res) {
   const { body } = req;
 
   User.findOne({ email: body.email }, (err, user) => {
@@ -24,7 +27,9 @@ router.put('/login', function(req, res) {
     }
     if (user.verifyPassword(body.password)) {
       const token = user.generateJWT();
-      res.status(200).send({ 'app-token': token });
+      res
+        .set('token', `Bearer ${token}`)
+        .send({ message: 'Registration  & Login Successful.', token });
     } else {
       res.status(400).send('Wrong creds');
     }
