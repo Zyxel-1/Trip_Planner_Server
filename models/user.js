@@ -27,7 +27,20 @@ const UserSchema = new Schema({
     required: false
   }
 });
-
+UserSchema.pre('validate', function(next) {
+  const user = this;
+  if (user.isModified('password')) {
+    bcrypt.genSalt(SALT_ROUNDS, (err, salt) => {
+      bcrypt.hash(this.password, salt, (err, hash) => {
+        user.password = hash;
+        user.salt = salt;
+        next();
+      });
+    });
+  } else {
+    next();
+  }
+});
 // Validate incoming password
 UserSchema.methods.verifyPassword = async function(password) {
   const result = await bcrypt.compare(password, this.password);
