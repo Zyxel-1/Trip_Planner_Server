@@ -37,9 +37,9 @@ router.delete('/:id', (req, res) => {
 
 router.get('/', (req, res) => {
   const { _id } = jwtDecode(req.headers.authorization);
-  Trip.find({ UserID: _id }, (err, trips) => {
-    const list = trips.map(trip => ({ id: trip._id, title: trip.title }));
-    res.json(list);
+  console.log(`Finding trips for id ${_id}`);
+  Trip.find({ userID: _id }, (err, trips) => {
+    res.json(trips);
   });
 });
 

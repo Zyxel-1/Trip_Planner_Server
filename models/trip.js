@@ -4,15 +4,17 @@ const { Schema } = mongoose;
 
 const TripSchema = new Schema({
   title: String,
-  Destination: String,
-  Description: String,
-  StartDate: Date,
-  EndDate: Date,
-  UserID: String,
-  TodoItem: [
+  destination: String,
+  description: String,
+  startDate: Date,
+  endDate: Date,
+  userID: String,
+  category: String,
+  setReminder: Boolean,
+  todoItem: [
     {
-      Title: String,
-      DoneStatus: Boolean
+      title: String,
+      doneStatus: Boolean
     }
   ]
 });
