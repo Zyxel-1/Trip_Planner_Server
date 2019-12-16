@@ -44,7 +44,6 @@ UserSchema.pre('validate', function(next) {
 // Validate incoming password
 UserSchema.methods.verifyPassword = async function(password) {
   const result = await bcrypt.compare(password, this.password);
-  console.log(`This is the result ${result}`);
   if (result) {
     return true;
   }

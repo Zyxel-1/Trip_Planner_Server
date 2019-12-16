@@ -25,7 +25,6 @@ router.put('/', function(req, res) {
     if (!user || user === null) {
       res.status(400).send('Could not find user');
     } else if (await user.verifyPassword(body.password)) {
-      console.log('HELLO');
       const token = user.generateJWT();
       res
         .set('token', `Bearer ${token}`)
