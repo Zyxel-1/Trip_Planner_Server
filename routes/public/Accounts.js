@@ -21,11 +21,11 @@ router.post('/', async (req, res) => {
 router.put('/', function(req, res) {
   const { body } = req;
 
-  User.findOne({ email: body.email }, (err, user) => {
-    if (!user) {
+  User.findOne({ email: body.email }, async (err, user) => {
+    if (!user || user === null) {
       res.status(400).send('Could not find user');
-    }
-    if (user.verifyPassword(body.password)) {
+    } else if (await user.verifyPassword(body.password)) {
+      console.log('HELLO');
       const token = user.generateJWT();
       res
         .set('token', `Bearer ${token}`)
